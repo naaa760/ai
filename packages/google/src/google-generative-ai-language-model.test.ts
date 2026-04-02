@@ -2687,6 +2687,25 @@ describe('doGenerate', () => {
     });
   });
 
+  it('should pass AUDIO in responseModalities', async () => {
+    prepareJsonFixtureResponse('google-text');
+
+    await model.doGenerate({
+      prompt: TEST_PROMPT,
+      providerOptions: {
+        google: {
+          responseModalities: ['AUDIO'],
+        },
+      },
+    });
+
+    expect(await server.calls[0].requestBodyJson).toMatchObject({
+      generationConfig: {
+        responseModalities: ['AUDIO'],
+      },
+    });
+  });
+
   it('should pass mediaResolution in provider options', async () => {
     prepareJsonFixtureResponse('google-text');
 
